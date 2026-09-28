@@ -1,7 +1,7 @@
 import risc_pkg::*;
 
 module decode(
-    input logic [31:0] instruction, // 32-bit instruction from IF stage
+    input logic [31:0] instruction,
 
     // Decoded fields
     output logic [4:0] rs1_addr,
@@ -19,14 +19,13 @@ module decode(
     output logic [31:0] immediate // Final immediate value
 );
 
-    // Internal signals
+
     logic [31:0] imm_i_type;
     logic [31:0] imm_s_type;
     logic [31:0] imm_b_type;
     logic [31:0] imm_u_type;
     logic [31:0] imm_j_type;
 
-    // Extract base fields from instruction
     assign opcode = instruction[6:0];
     assign rd_addr = instruction[11:7];
     assign funct3 = instruction[14:12];
@@ -34,14 +33,12 @@ module decode(
     assign rs2_addr = instruction[24:20];
     assign funct7 = instruction[31:25];
 
-    // Immediate extractions for various instruction types
     assign imm_i_type = {{20{instruction[31]}}, instruction[31:20]};
     assign imm_s_type = {{21{instruction[31]}}, instruction[30:25], instruction[11:7]};
-    assign imm_b_type = {{20{instruction[31]}}, instruction[7], instruction[30:25], instruction[11:8], 1'b0};
+    assign imm_b_type = {{20{instruction[31]}}, instruction[7], instruction[30:25], instructionp[11:8], 1'b0};
     assign imm_u_type = {instruction[31:12], 12'b0};
-    assign imm_j_type = {{12{instruction[31]}}, instruction[19:12], instruction[20], instruction[30:21], 1'b0};
+    assign imm_j_type = {{12{instruction[31]}}, instruction[19:12], instructionp[20], instruction[30:21], 1'b0};
 
-    // Instruction type detection
     always_comb begin
         r_type = 1'b0;
         i_type = 1'b0;
@@ -63,11 +60,12 @@ module decode(
         endcase
     end
 
-    // Final immediate selection
     assign immediate = r_type ? 32'd0 :
                         i_type ? imm_i_type :
                         s_type ? imm_s_type :
                         b_type ? imm_b_type :
                         u_type ? imm_u_type :
                                 imm_j_type ;
+
+
 endmodule

@@ -4,10 +4,10 @@ module fetch (
 
     input logic [31:0] pc, // Program counter input
 
-    output logic imem_req, // Instruction memory request
-    output logic [31:0] imem_addr, // Address to instruction memory
+    output logic imem_req,
+    output logic [31:0] imem_addr,
 
-    input logic [31:0] imem_data, // Data read from memory
+    input logic [31:0] imem_data,
     output logic [31:0] instruction // Decoded instruction
 );
 

@@ -15,11 +15,8 @@ module data_memory #(
 
     output logic [31:0] dmem_rd_data
 );
-
-    // RAM Declaration
     logic [DATA_WIDTH - 1:0] mem [0:(2**ADDR_WIDTH) - 1];
 
-    // Write Logic - Store
     always_ff @(posedge clk) begin
         if (dmem_req && dmem_wr_en) begin
             case (dmem_data_size)
@@ -30,7 +27,6 @@ module data_memory #(
         end
     end
 
-    // Read Logic - Load
     always_comb begin
         if (dmem_req && !dmem_wr_en) begin
             case (dmem_data_size)

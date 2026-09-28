@@ -1,20 +1,17 @@
 import risc_pkg::*;
 
 module control (
-    // Instruction type flags
-    input logic r_type,
-    input logic i_type,
-    input logic s_type,
-    input logic b_type,
-    input logic u_type,
-    input logic j_type,
+    input logic r_type;
+    input logic i_type;
+    input logic s_type;
+    input logic b_type;
+    input logic u_type;
+    input logic j_type;
 
-    // Instruction fields
     input logic [2:0] funct3,
     input logic [6:0] funct7,
     input logic [6:0] opcode,
 
-    // Outputs
     output logic pc_sel,
     output logic op1_sel,
     output logic op2_sel,
@@ -27,17 +24,16 @@ module control (
     output logic rf_wr_en
 );
 
-    // Internal signals
     logic [3:0] funct_r;
     logic [3:0] opcode_i;
     logic funct7_bit5;
 
-    assign funct7_bit5 = funct7[5];
+    assign funct7_bit5 = funct7[5]
 
     control_t ctrl_r, ctrl_i, ctrl_s, ctrl_b, ctrl_u, ctrl_j, ctrl;
 
     // R-type control
-    assign funct_r = {funct7_bit5, funct3};
+    assign funct_r = (funct7_bit5, funct3);
 
     always_comb begin
         ctrl_r = '0;
@@ -58,7 +54,7 @@ module control (
     end
 
     //I-type control
-    assign opcode_i = {opcode[4], funct3};
+    assign opcode_i = (opcode[4], funct3);
 
     always_comb begin
         ctrl_i = '0;
@@ -136,7 +132,7 @@ module control (
         ctrl_j.wb_src = WB_SRC_PC;
         ctrl_j.alu_src_a_select = 1'b1;
         ctrl_j.alu_src_b_select = 1'b1;
-        ctrl_j.pc_src_select = 1'b1;
+        ctrl_j.pc_src_select;
     end
 
     // Final control section

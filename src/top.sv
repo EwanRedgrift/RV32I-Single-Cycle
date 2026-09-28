@@ -1,10 +1,10 @@
 import risc_pkg::*;
 
 module top #(
-    parameter RESET_PC = 32'h0000
+    parameter RESET_PC = 32'h0000;
 )(
-    input logic clk,
-    input logic reset_n
+    logic clk,
+    logic reset_n,
 );
 
     // Instruction memory

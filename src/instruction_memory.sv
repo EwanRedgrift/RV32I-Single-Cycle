@@ -7,13 +7,12 @@ module instruction_memory #(
     input logic [31:0]  imem_addr, // Byte address
     output logic [31:0] imem_data // Output instruction
 );
-    logic [DATA_WIDTH - 1:0 ] mem [0:(2**ADDR_WIDTH) - 1];
+    logic [DATA_WIDTH - 1:0 ] mem [0:(2**ADDR_WIDTH) - 1]
 
     initial begin
         $readmemh("machine_code.mem", mem); // Initilize ROM with data
     end
 
-    // Read logic
     always_comb begin
         if (imem_req) begin
             imem_data = { // Read 4 bytes (8 bits * 4 = 32 bits)
@@ -23,7 +22,7 @@ module instruction_memory #(
                 mem[imem_addr + 3]
             };
         end else begin
-            imem_data = 32'd0;
+            imem_data = 32'd0
         end
     end
 
