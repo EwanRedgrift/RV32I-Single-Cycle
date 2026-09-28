@@ -1,6 +1,6 @@
 module register_file (
     input logic clk,
-    input lofic reset_n,
+    input logic reset_n,
 
     // Read register addresses
     input logic [4:0] rs1_addr,
@@ -15,8 +15,9 @@ module register_file (
     output logic [31:0] rs1_data,
     output logic [31:0] rs2_data
 );
-    logic [31:0] regs [0:31];
+    logic [31:0] regs [0:31]; // 32 x 32-bit registers
 
+    // Reset and write logic
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin // Reset all registers
             integer i;
@@ -24,10 +25,11 @@ module register_file (
             for (i = 0; i < 32; i = i + 1)
                 regs[i] <= 32'd0;
         end else if (rf_wr_en && (rd_addr != 5'd0)) begin
-            regs[rd_addr] <= wr_data
+            regs[rd_addr] <= wr_data;
         end
     end
 
+    // Read logic
     assign rs1_data = regs[rs1_addr];
     assign rs2_data = regs[rs2_addr];
 

@@ -1,5 +1,6 @@
 package risc_pkg;
 
+    // RISC-V Opcodes
     typedef enum logic [6:0] {
         OPCODE_R_TYPE = 7'h33,
         OPCODE_I_LOAD = 7'h03,
@@ -12,6 +13,7 @@ package risc_pkg;
         OPCODE_JAL = 7'h6F
     } opcode_t;
 
+    //ALU Operation Selector
     typedef enum logic [3:0] {
         ADD,
         SUB,
@@ -25,12 +27,14 @@ package risc_pkg;
         AND
     } alu_op_t;
 
+    // Memory Access Sizes
     typedef enum logic [1:0] {
         BYTE = 2'b00,
         HALF_WORD = 2'b01,
         WORD = 2'b11
     } mem_size_t;
 
+    // B-Type Instructions (Funct3)
     typedef enum logic [2:0] {
         B_BEQ = 3'h0,
         B_BNE = 3'h1,
@@ -40,6 +44,7 @@ package risc_pkg;
         B_BGEU = 3'h7
     } b_type_instr_t;
 
+    // R-Type Instructions (Funct7[5], Funct[3])
     typedef enum logic [3:0] {
         R_ADD = 4'h0,
         R_SUB = 4'h8,
@@ -53,6 +58,7 @@ package risc_pkg;
         R_AND = 4'h7
     } r_type_instr_t;
 
+    // I-Type Instructions (Opcode[4], Funct3)
     typedef enum logic [3:0] {
         I_LB = 4'h0,
         I_LH = 4'h1,
@@ -66,22 +72,25 @@ package risc_pkg;
         I_ORI = 4'hE,
         I_ANDI = 4'hF,
         I_SLLI = 4'h9,
-        I_SRLI_SRAI = 4'hD
+        I_SRLI_SRAI = 4'hD // Shared funct3
     } i_type_instr_t;
 
+    // S-Type Instructions (Funct3)
     typedef enum logic [2:0] {
         S_SB = 3'h0,
         S_SH = 3'h1,
         S_SW = 3'h2
     } s_type_instr_t;
 
+    // Register File Writeback Sources
     typedef enum logic [1:0] {
         WB_SRC_ALU = 2'b00,
         WB_SRC_MEM = 2'b01,
         WB_SRC_IMM = 2'b10,
         WB_SRC_PC = 2'b11
     } wb_src_t;
-    
+
+    // Control Signal Struct
     typedef struct packed {
         logic mem_valid; // Asserted for memory access
         logic mem_write; // 1 = write, 0 = read
