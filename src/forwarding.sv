@@ -25,11 +25,11 @@ module forwarding (
 
         // ALU a
         else if (exmem_rf_wr_en && (exmem_rd_addr != 5'd0) && (exmem_rd_addr == idex_rs1_addr)) begin
-            op1_sel = 2'b11; // forwards to exmem_alu_res
+            op1_sel = 2'b11;
         end 
         
         else if (memwb_rf_wr_en && (memwb_rd_addr != 5'd0) && (memwb_rd_addr == idex_rs1_addr)) begin
-             op1_sel = 2'b10; // forwards to memwb_alu_res
+             op1_sel = 2'b10;
         end
 
         // ALU b
@@ -38,11 +38,11 @@ module forwarding (
         end 
 
         else if (exmem_rf_wr_en && (exmem_rd_addr != 5'd0) && (exmem_rd_addr == idex_rs2_addr)) begin
-            op2_sel = 2'b11; // forwards to exmem_alu_res
+            op2_sel = 2'b11;
         end 
         
         else if (memwb_rf_wr_en && (memwb_rd_addr != 5'd0) && (memwb_rd_addr == idex_rs2_addr)) begin
-             op2_sel = 2'b10; // forwards to memwb_alu_res
+             op2_sel = 2'b10;
         end
         
     end
