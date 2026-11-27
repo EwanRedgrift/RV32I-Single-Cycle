@@ -17,7 +17,7 @@ module forwarding (
     always_comb begin
 
         op1_sel = 2'b00;
-        op1_sel = 2'b00;
+        op2_sel = 2'b00;
 
         if (idex_op1_sel) begin
             op1_sel = 2'b01;
